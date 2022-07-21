@@ -15,6 +15,10 @@ public class EduGame implements Game {
 	private int num2;
 	private int answer;
 	private int userAnswer;
+	private String opt;
+	private Double number1;
+	private Double number2;
+	private Double resultCal;
 	private String figure;
 	private String figures;
 	private String currentGame;
@@ -28,6 +32,28 @@ public class EduGame implements Game {
 
 	public EduGame() {
 		isUserLoggedIn = false;
+	}
+
+//	for game's answer / result:
+
+	public int answer(String opt) {
+
+		switch (opt) {
+		case "+":
+			answer = num1 + num2;
+			break;
+		case "-":
+			answer = num1 - num2;
+			break;
+		case "/":
+			answer = num1 / num2;
+			break;
+		case "*":
+			answer = num1 * num2;
+			break;
+		}
+		return answer;
+
 	}
 
 //	used to navigate between menus and options
@@ -71,9 +97,9 @@ public class EduGame implements Game {
 
 		} else {
 			System.out.println("\n================Error================\n");
-			System.out.println("Wrong input! please input one of the number shows");
+			System.out.println("Wrong input! please input one of the options");
 			System.out.println("\n================Error================\n");
-			mainMenu();
+			switchSelection();
 		}
 
 	}
@@ -259,6 +285,42 @@ public class EduGame implements Game {
 
 	}
 
+//	used to input num1 num2 in games (making sure only input numbers)
+
+	public void inputNum() {
+
+		System.out.print("1st Number\t: ");
+		while (!scanner.hasNextInt()) {
+			System.out.println("Please only input numbers.");
+			System.out.print("1st Number\t: ");
+			scanner.nextLine();
+		}
+		this.num1 = scanner.nextInt();
+		scanner.nextLine();
+
+		System.out.print("2nd number\t:");
+		while (!scanner.hasNextInt()) {
+			System.out.println("Please only input numbers.");
+			System.out.print("2nd Number\t: ");
+			scanner.nextLine();
+		}
+		this.num2 = scanner.nextInt();
+		scanner.nextLine();
+	}
+
+//	To make sure user only input numbers as answer
+
+	public void inputAnswer() {
+		System.out.print("Answer\t>");
+		while (!scanner.hasNextInt()) {
+			System.out.println("Please only input numbers.");
+			System.out.print("Answer\t>");
+			scanner.nextLine();
+		}
+		userAnswer = scanner.nextInt();
+		scanner.nextLine();
+	}
+
 //	add game
 	public void additionGame() {
 		currentGame = c1;
@@ -266,13 +328,11 @@ public class EduGame implements Game {
 		System.out.println("\n================EduGame================\n");
 		if (isUserLoggedIn) {
 
-			System.out.println("to play this game input two numbers you'd like\n");
-			System.out.print("1st Number: ");
-			this.num1 = scanner.nextInt();
-			scanner.nextLine();
-			System.out.print("2nd number :");
-			this.num2 = scanner.nextInt();
-			scanner.nextLine();
+			System.out.println("to play this game input two numbers you'd like");
+			System.out.println("no negative number should be used \n");
+
+			inputNum();
+
 			System.out.println("\n\n----------------------------------------");
 			System.out.printf("Ok %s now let's imagine!\n", userName);
 
@@ -308,10 +368,10 @@ public class EduGame implements Game {
 				System.out.printf(",,,%s,,,\n", figures);
 			}
 			System.out.println("can you count how many kids having fun at the park?");
-			System.out.print("Answer >");
-			userAnswer = scanner.nextInt();
-			scanner.nextLine();
-			answer = num1 + num2;
+
+			inputAnswer();
+
+			answer("+");
 
 			System.out.printf("\n\toh, your answer is %d?\n", userAnswer);
 			if (userAnswer == answer) {
@@ -328,7 +388,9 @@ public class EduGame implements Game {
 			System.out.println("[C ] Back to counting Menu ");
 			System.out.println("[1 ] Main Menu");
 			switchSelection();
-		} else {
+		} else
+
+		{
 			alertLogin(currentGame);
 
 		}
@@ -342,16 +404,11 @@ public class EduGame implements Game {
 
 		System.out.println("\n================EduGame================\n");
 		if (isUserLoggedIn) {
+			System.out.println("to play this game input two numbers you'd like");
+			System.out.println("the first number should be greater than second number");
+			System.out.println("no negative number should be used\n");
 
-			System.out.println("to play this game input two numbers you'd like\n");
-			System.out.println("make sure the first number is greater than second number");
-			System.out.println("and no negative numbers used");
-			System.out.print("1st Number: ");
-			this.num1 = scanner.nextInt();
-			scanner.nextLine();
-			System.out.print("2nd number :");
-			this.num2 = scanner.nextInt();
-			scanner.nextLine();
+			inputNum();
 
 			figure = "\u2605";
 			figures = "";
@@ -415,10 +472,10 @@ public class EduGame implements Game {
 			}
 			System.out.println(figures);
 			System.out.println("\n\nnow count the stars left on the sky");
-			System.out.print("answer>");
-			userAnswer = scanner.nextInt();
-			scanner.nextLine();
-			answer = num1 + num2;
+
+			inputAnswer();
+
+			answer("-");
 
 			System.out.printf("\n\toh, your answer is %d?\n", userAnswer);
 			if (userAnswer == answer) {
@@ -450,12 +507,9 @@ public class EduGame implements Game {
 		if (isUserLoggedIn) {
 			System.out.println("to play this game input two numbers you'd like\n");
 			System.out.println("and no negative numbers used");
-			System.out.print("1st Number: ");
-			this.num1 = scanner.nextInt();
-			scanner.nextLine();
-			System.out.print("2nd number :");
-			this.num2 = scanner.nextInt();
-			scanner.nextLine();
+
+			inputNum();
+
 			System.out.println("\n\n----------------------------------------");
 			System.out.printf("Ok %s now let's imagine!\n", userName);
 
@@ -519,10 +573,10 @@ public class EduGame implements Game {
 			}
 
 			System.out.println("so how many cookies you share?");
-			System.out.print("answer: ");
-			userAnswer = scanner.nextInt();
-			scanner.nextLine();
-			answer = num1 * num2;
+
+			inputAnswer();
+
+			answer("*");
 
 			System.out.printf("\n\toh, your answer is %d?\n", userAnswer);
 			if (userAnswer == answer) {
@@ -576,10 +630,10 @@ public class EduGame implements Game {
 			System.out.printf("there are %d kids including you\n", num1);
 			System.out.printf("the teacher wants each line has %d kids\n", num2);
 			System.out.println("how many lines will there be?\n");
-			System.out.print("Answer > ");
-			userAnswer = scanner.nextInt();
-			scanner.nextLine();
-			answer = num1 / num2;
+
+			inputAnswer();
+
+			answer("/");
 
 			System.out.printf("\n\toh, your answer is %d?\n", userAnswer);
 			if (userAnswer == answer) {
@@ -647,9 +701,8 @@ public class EduGame implements Game {
 			System.out.println("\nDo you want to see how square looks?");
 			System.out.println("first let's decide on the size");
 			System.out.println("pick number that greater than 1");
-			System.out.print("Answer >");
-			userAnswer = scanner.nextInt();
-			scanner.nextLine();
+
+			inputAnswer();
 
 			for (int i = 0; i < userAnswer; i++) {
 				for (int j = 0; j < userAnswer; j++) {
@@ -687,9 +740,8 @@ public class EduGame implements Game {
 			System.out.println("We will show you two of them~");
 			System.out.println("first let's decide on the size");
 			System.out.println("pick number that greater than 1");
-			System.out.print("Answer >");
-			userAnswer = scanner.nextInt();
-			scanner.nextLine();
+
+			inputAnswer();
 
 			System.out.println("\n\tAn equilateral triangle");
 
@@ -735,9 +787,8 @@ public class EduGame implements Game {
 			System.out.println("\nLet's see how Rhombus looks like~");
 			System.out.println("first let's decide on the size");
 			System.out.println("pick number that greater than 1");
-			System.out.print("Answer >");
-			userAnswer = scanner.nextInt();
-			scanner.nextLine();
+
+			inputAnswer();
 
 			for (int i = 0; i < userAnswer; i++) {
 				for (int k = 1; k < userAnswer - i; k++) {
@@ -792,67 +843,88 @@ public class EduGame implements Game {
 
 //	Calculator
 
-	public void calculator() {
-		System.out.println("\n================EduGame================\n");
-		String opt;
-		Double number1;
-		Double number2;
-		Double result;
-
-		System.out.println("\t\tCALCULATOR");
-		System.out.print("Number 1 \t\t: ");
+	public Double number1() {
+		while (!scanner.hasNextInt()) {
+			System.out.println("Please only input numbers.");
+			System.out.print("1st Number\t: ");
+			scanner.nextLine();
+		}
 		number1 = scanner.nextDouble();
 		scanner.nextLine();
+		return number1;
+	}
 
-		System.out.print("Opt Symbol (+ - * :) \t: ");
-		opt = scanner.nextLine();
-
-		System.out.print("Number 2 \t\t: ");
+	public Double number2() {
+		while (!scanner.hasNextInt()) {
+			System.out.println("Please only input numbers.");
+			System.out.print("2nd Number\t: ");
+			scanner.nextLine();
+		}
 		number2 = scanner.nextDouble();
 		scanner.nextLine();
+		return number2;
+	}
 
-		System.out.println("\n\t\t~calculator~\n\n");
+	public Double resultCal(Double num1, Double num2, String opt) {
 
 		switch (opt) {
 		case "+":
-			result = number1 + number2;
-			System.out.printf("\t%.0f + %.0f = %.0f", number1, number2, result);
-			System.out.println("\n\n----------------------------------------");
-			System.out.println("[R] Try again!");
-			System.out.println("[1] Main Menu");
-			switchSelection();
+			resultCal = num1 + num2;
 			break;
 		case "-":
-			result = number1 - number2;
-			System.out.printf("\t%.0f - %.0f = %.0f", number1, number2, result);
-			System.out.println("\n\n----------------------------------------");
-			System.out.println("[R] Try again!");
-			System.out.println("[1] Main Menu");
-			switchSelection();
+			resultCal = number1 - number2;
 			break;
 		case "*":
-			result = number1 * number2;
-			System.out.printf("\t%.0f * %.0f = %.0f", number1, number2, result);
-			System.out.println("\n\n----------------------------------------");
-			System.out.println("[R] Try again!");
-			System.out.println("[1] Main Menu");
-			switchSelection();
+			resultCal = number1 * number2;
 			break;
-		case ":":
-			result = number1 / number2;
-			System.out.printf("\t%.0f : %.0f = %.1f", number1, number2, result);
-			System.out.println("\n\n----------------------------------------");
-			System.out.println("[R] Try again!");
-			System.out.println("[1] Main Menu");
-			switchSelection();
-			break;
-		default:
-			System.out.println("\n================Error================\n");
-			System.out.println("Wrong input! please input one of the number shows");
-			System.out.println("\n================Error================\n");
-			calculator();
+		case "/":
+			resultCal = number1 / number2;
 			break;
 		}
+		return resultCal;
+
+	}
+
+	public void optCal() {
+		String symOpt;
+
+		symOpt = scanner.nextLine();
+		if (symOpt.equalsIgnoreCase("+") || symOpt.equalsIgnoreCase("-") || symOpt.equalsIgnoreCase("*")
+				|| symOpt.equalsIgnoreCase("/")) {
+			opt = symOpt;
+		} else {
+			System.out.println("Wrong input, please only use between + - / * ");
+			System.out.println("try again");
+			System.out.print("Opt Symbol (+ - * /) \t: ");
+			optCal();
+
+		}
+	}
+
+	public void calculator() {
+
+		System.out.println("\n================EduGame================\n");
+
+		System.out.println("\t\tCALCULATOR");
+		System.out.print("1st Number \t\t: ");
+		number1();
+
+		System.out.print("Opt Symbol (+ - * /) \t: ");
+		optCal();
+
+		System.out.print("Number 2 \t\t: ");
+		number2();
+
+		resultCal(number1, number2, opt);
+
+		System.out.println("\n\t\t~calculator~\n\n");
+
+		System.out.printf("\t%.0f %s %.0f = %.0f", number1, opt, number2, resultCal);
+
+		System.out.println("\n\n----------------------------------------");
+		System.out.println("[R] Try again!");
+		System.out.println("[1] Main Menu");
+		switchSelection();
 
 	}
 
